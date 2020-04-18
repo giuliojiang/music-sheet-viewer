@@ -1,1 +1,3 @@
-console.info('hello');
+import { defineViewport } from "./viewport";
+
+defineViewport();
