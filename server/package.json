@@ -1,0 +1,19 @@
+{
+  "name": "music-sheet-viewer-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "author": "giuliojiang",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^13.13.0",
+    "express": "^4.17.1"
+  }
+}
