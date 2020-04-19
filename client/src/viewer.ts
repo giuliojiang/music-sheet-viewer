@@ -16,16 +16,17 @@ export class ViewerElement extends HTMLElement {
 
     connectedCallback(): void {
         let handleUp = () => {
-            console.info('up');
+            var event = new CustomEvent('viewerup', {
+                bubbles: true
+            });
+            this.dispatchEvent(event);
         };
 
         let handleLeft = () => {
-            console.info('left');
             this.setNewIndex(this.currentPage - 1);
         };
 
         let handleRight = () => {
-            console.info('right');
             this.setNewIndex(this.currentPage + 1);
         };
 
@@ -37,6 +38,7 @@ export class ViewerElement extends HTMLElement {
                     height: 100%;
                     position: absolute;
                     object-fit: contain;
+                    background-color: white;
                 }
 
                 .viewer-image-hidden {
@@ -96,8 +98,6 @@ export class ViewerElement extends HTMLElement {
     }
 
     renderImages(): void {
-        // TODO remove images that should be unloaded
-
         let previousIndex = this.currentPage - 1;
         let nextIndex = this.currentPage + 1;
 
@@ -108,6 +108,18 @@ export class ViewerElement extends HTMLElement {
 
         this.loadImage(previousIndex);
         this.loadImage(nextIndex);
+
+        // Remove images that should be unloaded
+        let loadedIndexes = [previousIndex, this.currentPage, nextIndex];
+        let children = this.children;
+        for (let i = 0; i < children.length; i++) {
+            let child = children.item(i);
+            let childIndex = parseInt(child.getAttribute('data-viewer-index'));
+            if (!isNaN(childIndex) && !loadedIndexes.includes(childIndex)) {
+                console.info(`Unloading image ${childIndex}`);
+                child.remove();
+            }
+        }
     }
 
     private findMatchingChild(index: number): HTMLElement {

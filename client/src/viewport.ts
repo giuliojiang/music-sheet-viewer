@@ -54,6 +54,11 @@ export class ViewportElement extends HTMLElement {
             this.render();
         };
 
+        let handleViewerUp = () => {
+            this.selectedDocument = null;
+            this.render();
+        }
+
         render(html`
         
             <style>
@@ -144,7 +149,7 @@ export class ViewportElement extends HTMLElement {
 
                 ${this.selectedDocument != null
                     ? html`
-                        <app-viewer data-viewport-viewer class="viewport-viewer"></app-viewer>
+                        <app-viewer data-viewport-viewer class="viewport-viewer" @viewerup=${handleViewerUp}></app-viewer>
                     `
                     : html``}
             </div>
