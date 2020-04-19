@@ -1,3 +1,5 @@
-import { defineViewport } from "./viewport";
+import { ViewportElement } from "./viewport";
+import { DoclistElement } from "./doclist";
 
-defineViewport();
+ViewportElement.defineElement();
+DoclistElement.defineElement();
