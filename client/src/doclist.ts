@@ -32,6 +32,7 @@ export class DoclistElement extends HTMLElement {
                 .doclist-item {
                     padding: 10px;
                     cursor: pointer;
+                    user-select: text;
                 }
             </style>
 

@@ -80,10 +80,10 @@ export class ViewerElement extends HTMLElement {
             </style>
 
             <div class="viewer-control-layer">
-                <div class="viewer-control-row-top" @click=${handleUp}></div>
+                <div class="viewer-control-row-top" @click=${handleUp} @touchstart=${handleUp}></div>
                 <div class="viewer-control-row-bottom">
-                    <div class="viewer-control-row-bottom-item" @click=${handleLeft}></div>
-                    <div class="viewer-control-row-bottom-item" @click=${handleRight}></div>
+                    <div class="viewer-control-row-bottom-item" @click=${handleLeft} @touchstart=${handleLeft}></div>
+                    <div class="viewer-control-row-bottom-item" @click=${handleRight} @touchstart=${handleRight}></div>
                 </div>
             </div>
         `, this);
