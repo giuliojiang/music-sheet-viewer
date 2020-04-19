@@ -39,7 +39,7 @@ export class DoclistElement extends HTMLElement {
                 ${documents.map(document => {
                     let documentClick = () => {
                         let event = new CustomEvent('docselected', {
-                            detail: document.id, 
+                            detail: document, 
                             bubbles: true
                         });
                         this.dispatchEvent(event);

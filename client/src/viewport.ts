@@ -1,4 +1,5 @@
 import {render, html} from 'lit-html';
+import { ViewerElement } from './viewer';
 
 export class ViewportElement extends HTMLElement {
 
@@ -7,6 +8,7 @@ export class ViewportElement extends HTMLElement {
     }
 
     currentRotation: number = 0;
+    selectedDocument: DocumentModel = null;
 
     getViewportClass(): string {
         if (this.currentRotation == 0) {
@@ -48,6 +50,8 @@ export class ViewportElement extends HTMLElement {
 
         let handleDocSelected = (event: CustomEvent) => {
             console.info(`Selected doc ${event.detail}`);
+            this.selectedDocument = event.detail;
+            this.render();
         };
 
         render(html`
@@ -116,6 +120,15 @@ export class ViewportElement extends HTMLElement {
                     height: 0;
                     flex-grow: 2;
                 }
+
+                .viewport-viewer {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    z-index: 200;
+                    top: 0;
+                    left: 0;
+                }
             </style>
 
             <div data-app-viewport-main class="viewport-common ${this.getViewportClass()}">
@@ -128,8 +141,18 @@ export class ViewportElement extends HTMLElement {
                     </div>
                     <app-doclist class="viewport-doclist" @docselected=${handleDocSelected}></app-doclist>
                 </div>
-            </div>
 
+                ${this.selectedDocument != null
+                    ? html`
+                        <app-viewer data-viewport-viewer class="viewport-viewer"></app-viewer>
+                    `
+                    : html``}
+            </div>
         `, this);
+
+        let viewer = this.querySelector('[data-viewport-viewer]') as ViewerElement;
+        if (viewer != null) {
+            viewer.setDocument(this.selectedDocument);
+        }
     }
 }
