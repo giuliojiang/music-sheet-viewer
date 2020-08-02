@@ -8,14 +8,25 @@ export class ViewerElement extends HTMLElement {
 
     currentPage: number = 0;
     document: DocumentModel = null;
+    lastUp: number = 0;
+    lastLeft: number = 0;
+    lastRight: number = 0;
 
     setDocument(document: DocumentModel): void {
         this.document = document;
         this.renderImages();
     }
 
+    getNow(): number {
+        return new Date().getTime();
+    }
+
     connectedCallback(): void {
         let handleUp = () => {
+            if (this.getNow() - this.lastUp < 500) {
+                return;
+            }
+            this.lastUp = this.getNow();
             var event = new CustomEvent('viewerup', {
                 bubbles: true
             });
@@ -23,10 +34,18 @@ export class ViewerElement extends HTMLElement {
         };
 
         let handleLeft = () => {
+            if (this.getNow() - this.lastLeft < 500) {
+                return;
+            }
+            this.lastLeft = this.getNow();
             this.setNewIndex(this.currentPage - 1);
         };
 
         let handleRight = () => {
+            if (this.getNow() - this.lastRight < 500) {
+                return;
+            }
+            this.lastRight = this.getNow();
             this.setNewIndex(this.currentPage + 1);
         };
 
